@@ -6,6 +6,7 @@
 **/node_modules/
 **/dist/
 **/.angular/
+**/appsettings.Development.json
 .env
 .env.*
 !.env.example

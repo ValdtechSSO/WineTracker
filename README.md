@@ -60,12 +60,16 @@ docker compose up -d
 In a second terminal, restore the local EF tool and start the API:
 
 ```bash
+cp src/Hosts/Api/appsettings.Development.example.json \
+  src/Hosts/Api/appsettings.Development.json
 dotnet tool restore
 dotnet run --project src/Hosts/Api/WineTracker.Api.csproj
 ```
 
 The API applies committed migrations on startup and listens at
-`http://localhost:5080` in the default development profile.
+`http://localhost:5080` in the default development profile. The generated
+`appsettings.Development.json` is local-only and ignored by Git. Never commit
+that file; change its connection string locally when required.
 
 In a third terminal, install and start the Angular host:
 
@@ -94,6 +98,7 @@ uses the most recent choice for each wine.
 ## Product checks
 
 ```bash
+./tools/check-development-settings.sh
 dotnet restore WineTracker.slnx
 dotnet build WineTracker.slnx --no-restore
 dotnet test WineTracker.slnx --no-build
