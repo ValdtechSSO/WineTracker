@@ -18,6 +18,7 @@ decision to order them again explicit.
 - Backend build: `dotnet build WineTracker.slnx`
 - Backend tests: `dotnet test WineTracker.slnx`
 - Frontend checks: `npm --prefix src/Hosts/Web run check`
+- Development settings: `./tools/check-development-settings.sh`
 - Architecture: `uvx --from agentic-architecture-kit==0.4.3 aak validate --fail-on-review`
 
 ## Critical rules
@@ -26,6 +27,8 @@ decision to order them again explicit.
 - The reorder decision is explicit and is never inferred from a rating.
 - PostgreSQL access remains behind the WineJournal module's persistence port.
 - Angular Material supplies interactive UI components; do not introduce a parallel component system.
+- Every `appsettings.Development.json` is local-only and must remain ignored and untracked.
+- Never place connection strings, credentials, or other environment-specific secrets in a tracked appsettings file.
 - Do not add speculative modules, projects, abstractions, or empty directories.
 - Boundary changes update policy, contracts, decisions, validation, and evidence atomically.
 

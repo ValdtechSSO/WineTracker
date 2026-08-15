@@ -28,6 +28,9 @@ jobs:
           cache: npm
           cache-dependency-path: src/Hosts/Web/package-lock.json
 
+      - name: Enforce local-only development settings
+        run: ./tools/check-development-settings.sh
+
       - name: Restore .NET dependencies
         run: dotnet restore WineTracker.slnx
 
