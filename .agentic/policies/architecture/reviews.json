@@ -1,5 +1,26 @@
 {
   "$schema": "https://raw.githubusercontent.com/ValdtechSSO/AgenticArchitectureKit/v0.4.3/src/agentic_architecture_kit/data/schemas/architecture-reviews.schema.json",
   "version": 1,
-  "reviews": []
+  "reviews": [
+    {
+      "id": "REVIEW-001",
+      "rule": "OWN001",
+      "scope": ".",
+      "subjectFingerprint": "7d9aa633c18b9fd71c0ad68214f8223a0de11ea9d48ca2b7de2b193f136b4b80",
+      "ruleDigest": "sha256:24ddb08bb595a6efe4bdcf4b89ce9ff079b119d0165beff3b829f1860c7f173c",
+      "decision": "WineJournal is the sole authoritative owner of wines and wine-consumption records; PostgreSQL access remains behind its module-owned persistence boundary.",
+      "authorityId": "architecture-maintainers",
+      "reviewedBy": [
+        "@valdtechsecurity"
+      ],
+      "approvalEvidence": "github-maintainer-attestation:https://github.com/ValdtechSSO/WineTracker/issues/1#issuecomment-5299418695",
+      "authorizedBy": [
+        "architecture/decisions/ADR-001-initial-architecture.md"
+      ],
+      "reviewedAtRevision": "25bd17bc05cf54d67325870a72f9326cc4a31e0b",
+      "reviewWhen": [
+        "The authoritative data set, owning module, persistence boundary, rule semantics, or reviewed evidence changes."
+      ]
+    }
+  ]
 }
