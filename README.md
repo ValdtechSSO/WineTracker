@@ -31,10 +31,11 @@ structure.
 
 ## Bootstrap status
 
-The architecture is declared before product implementation. `OWN001` remains a
-visible semantic review until the sole maintainer posts a durable GitHub
-attestation and the fingerprint-bound review is committed. This is intentional:
-the repository does not claim mechanical proof of PostgreSQL write ownership.
+The architecture was declared and reviewed before product implementation.
+`OWN001` is explicitly `REVIEWED` through a
+[durable maintainer attestation](https://github.com/ValdtechSSO/WineTracker/issues/1#issuecomment-5299418695)
+bound to the rule digest, subject fingerprint, and reviewed commit. The
+repository does not claim mechanical proof of PostgreSQL write ownership.
 
 ## Architecture validation
 
