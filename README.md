@@ -43,5 +43,63 @@ repository does not claim mechanical proof of PostgreSQL write ownership.
 uvx --from agentic-architecture-kit==0.4.3 aak validate --fail-on-review
 ```
 
-Product build and run commands will be added when the first vertical slice is
-materialized.
+## Run locally
+
+Requirements:
+
+- .NET SDK 10
+- Node.js 24 and npm 11
+- Docker with Compose
+
+Start PostgreSQL:
+
+```bash
+docker compose up -d
+```
+
+In a second terminal, restore the local EF tool and start the API:
+
+```bash
+dotnet tool restore
+dotnet run --project src/Hosts/Api/WineTracker.Api.csproj
+```
+
+The API applies committed migrations on startup and listens at
+`http://localhost:5080` in the default development profile.
+
+In a third terminal, install and start the Angular host:
+
+```bash
+npm ci --prefix src/Hosts/Web
+npm start --prefix src/Hosts/Web
+```
+
+Open `http://localhost:4200`. The Angular development proxy forwards `/api`
+requests to the backend.
+
+Stop PostgreSQL without deleting the journal data:
+
+```bash
+docker compose down
+```
+
+## Product model
+
+A wine is identified by producer, label, vintage (or non-vintage), and type.
+Recording the same wine again creates another consumption event rather than
+overwriting history. Each event stores its own date, optional rating and notes,
+and an explicit `yes`, `no`, or `undecided` reorder choice. The order-again list
+uses the most recent choice for each wine.
+
+## Product checks
+
+```bash
+dotnet restore WineTracker.slnx
+dotnet build WineTracker.slnx --no-restore
+dotnet test WineTracker.slnx --no-build
+npm ci --prefix src/Hosts/Web
+npm run check --prefix src/Hosts/Web
+```
+
+GitHub Actions runs both product checks and the strict AAK architecture gate on
+pull requests and pushes to `main`.

@@ -1,0 +1,214 @@
+<mat-toolbar class="topbar">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">W</span>
+    <span>WineTracker</span>
+  </div>
+  <span class="tagline">Remember every bottle worth meeting again.</span>
+</mat-toolbar>
+
+@if (loading()) {
+  <mat-progress-bar mode="indeterminate" aria-label="Loading wine journal" />
+}
+
+<main>
+  <section class="hero" aria-labelledby="page-title">
+    <div>
+      <p class="eyebrow">Your personal wine journal</p>
+      <h1 id="page-title">Drink thoughtfully.<br />Order confidently.</h1>
+      <p class="intro">
+        Capture what was in the glass, keep every tasting in context, and make
+        the next wine list easier to navigate.
+      </p>
+    </div>
+
+    <div class="summary" aria-label="Journal summary">
+      <div><strong>{{ history().length }}</strong><span>tastings</span></div>
+      <div><strong>{{ distinctWineCount() }}</strong><span>wines</span></div>
+      <div><strong>{{ reorderCandidates().length }}</strong><span>order again</span></div>
+    </div>
+  </section>
+
+  <mat-tab-group animationDuration="250ms" class="journal-tabs">
+    <mat-tab label="Record a tasting">
+      <div class="tab-content record-layout">
+        <section class="section-copy">
+          <p class="eyebrow">New entry</p>
+          <h2>What did you drink?</h2>
+          <p>Wine details identify the bottle. Tasting details belong only to this occasion.</p>
+        </section>
+
+        <mat-card appearance="outlined" class="form-card">
+          <mat-card-content>
+            <form [formGroup]="form" (ngSubmit)="submit()">
+              <div class="form-grid">
+                <mat-form-field appearance="outline">
+                  <mat-label>Producer</mat-label>
+                  <input matInput formControlName="producer" autocomplete="organization" />
+                  @if (form.controls.producer.hasError('required')) {
+                    <mat-error>Producer is required.</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Wine name or label</mat-label>
+                  <input matInput formControlName="name" autocomplete="off" />
+                  @if (form.controls.name.hasError('required')) {
+                    <mat-error>Wine name is required.</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Vintage</mat-label>
+                  <input matInput type="number" formControlName="vintage" placeholder="Non-vintage" />
+                  @if (form.controls.vintage.invalid) {
+                    <mat-error>Use a year from 1800 to 2200.</mat-error>
+                  }
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Wine type</mat-label>
+                  <mat-select formControlName="type">
+                    @for (type of wineTypes; track type) {
+                      <mat-option [value]="type">{{ type }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="span-two">
+                  <mat-label>Region</mat-label>
+                  <input matInput formControlName="region" placeholder="Optional" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Consumed on</mat-label>
+                  <input matInput type="date" formControlName="consumedOn" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Rating</mat-label>
+                  <mat-select formControlName="rating">
+                    <mat-option [value]="null">Not rated</mat-option>
+                    @for (rating of ratings; track rating) {
+                      <mat-option [value]="rating">{{ rating }} / 5</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="span-two">
+                  <mat-label>Tasting notes</mat-label>
+                  <textarea matInput formControlName="notes" rows="4" placeholder="What stood out?"></textarea>
+                  <mat-hint align="end">{{ form.controls.notes.value.length }} / 2000</mat-hint>
+                </mat-form-field>
+              </div>
+
+              <fieldset class="intent-field">
+                <legend>Would you order it again?</legend>
+                <mat-button-toggle-group formControlName="reorderIntent" aria-label="Reorder intent">
+                  <mat-button-toggle value="Yes">Yes</mat-button-toggle>
+                  <mat-button-toggle value="Undecided">Not sure</mat-button-toggle>
+                  <mat-button-toggle value="No">No</mat-button-toggle>
+                </mat-button-toggle-group>
+              </fieldset>
+
+              <button mat-flat-button type="submit" [disabled]="saving()">
+                {{ saving() ? 'Saving…' : 'Save tasting' }}
+              </button>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="History">
+      <div class="tab-content">
+        <section class="section-heading">
+          <div>
+            <p class="eyebrow">Every glass, in context</p>
+            <h2>Tasting history</h2>
+          </div>
+          <mat-chip-set aria-label="History count">
+            <mat-chip>{{ history().length }} entries</mat-chip>
+          </mat-chip-set>
+        </section>
+
+        @if (history().length === 0 && !loading()) {
+          <div class="empty-state">
+            <h3>Your journal is ready.</h3>
+            <p>Record the first tasting to start building your history.</p>
+          </div>
+        } @else {
+          <div class="card-grid">
+            @for (item of history(); track item.consumptionId) {
+              <mat-card appearance="outlined" class="wine-card">
+                <mat-card-header>
+                  <mat-card-subtitle>{{ item.producer }} · {{ item.type }}</mat-card-subtitle>
+                  <mat-card-title>{{ item.name }} {{ displayVintage(item.vintage) }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <div class="facts">
+                    <span>{{ item.consumedOn }}</span>
+                    <span>{{ stars(item.rating) }}</span>
+                    @if (item.region) { <span>{{ item.region }}</span> }
+                  </div>
+                  <p class="notes">{{ item.notes || 'No tasting notes for this occasion.' }}</p>
+                  <div class="card-intent">
+                    <span>Order again?</span>
+                    <mat-button-toggle-group
+                      [value]="item.reorderIntent"
+                      (change)="changeIntent(item, $event.value)"
+                      aria-label="Update reorder intent">
+                      <mat-button-toggle value="Yes">Yes</mat-button-toggle>
+                      <mat-button-toggle value="Undecided">Maybe</mat-button-toggle>
+                      <mat-button-toggle value="No">No</mat-button-toggle>
+                    </mat-button-toggle-group>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            }
+          </div>
+        }
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Order again">
+      <div class="tab-content">
+        <section class="section-heading">
+          <div>
+            <p class="eyebrow">Your shortlist</p>
+            <h2>Wines worth returning to</h2>
+          </div>
+        </section>
+
+        @if (reorderCandidates().length === 0 && !loading()) {
+          <div class="empty-state">
+            <h3>No bottles on the shortlist yet.</h3>
+            <p>Choose “Yes” on a tasting when a wine deserves another pour.</p>
+          </div>
+        } @else {
+          <div class="card-grid reorder-grid">
+            @for (wine of reorderCandidates(); track wine.wineId) {
+              <mat-card appearance="outlined" class="wine-card reorder-card">
+                <mat-card-header>
+                  <mat-card-subtitle>{{ wine.producer }}</mat-card-subtitle>
+                  <mat-card-title>{{ wine.name }} {{ displayVintage(wine.vintage) }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <div class="facts">
+                    <span>{{ wine.type }}</span>
+                    @if (wine.region) { <span>{{ wine.region }}</span> }
+                  </div>
+                  <p class="reorder-note">
+                    Last enjoyed {{ wine.lastConsumedOn }} · {{ stars(wine.lastRating) }} ·
+                    {{ wine.timesConsumed }} {{ wine.timesConsumed === 1 ? 'tasting' : 'tastings' }}
+                  </p>
+                </mat-card-content>
+              </mat-card>
+            }
+          </div>
+        }
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</main>
+
+<footer>WineTracker · A small journal with a clear memory.</footer>

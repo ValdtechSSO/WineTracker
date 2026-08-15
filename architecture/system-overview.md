@@ -38,7 +38,7 @@ installed.
 ## Open architectural questions
 
 - AAK 0.4.3 has no built-in Angular adapter. The declared web host root is
-  governed, while TypeScript structure relies on Angular build, lint, and tests
-  until a separately versioned adapter is justified and pinned.
+  governed, while TypeScript structure relies on Angular build, type checking,
+  and tests until a separately versioned adapter is justified and pinned.
 - Cloud deployment, authentication, external wine catalogs, image storage,
   inventory, and multi-user ownership are not current requirements.

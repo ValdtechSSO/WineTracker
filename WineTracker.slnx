@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Hosts/" />
+  <Folder Name="/src/Hosts/Api/">
+    <Project Path="src/Hosts/Api/WineTracker.Api.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/" />
+  <Folder Name="/src/Modules/WineJournal/">
+    <Project Path="src/Modules/WineJournal/WineTracker.WineJournal.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/WineTracker.WineJournal.Tests/WineTracker.WineJournal.Tests.csproj" />
+  </Folder>
+</Solution>
