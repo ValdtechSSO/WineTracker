@@ -1,0 +1,25 @@
+id: winejournal
+name: WineJournal
+purpose: >
+  Own wines, their consumption history, tasting observations, and explicit
+  reorder intent for the current single user.
+intent:
+  aliases:
+    - wine journal
+    - wine history
+    - reorder candidates
+ownership:
+  domain: personal wine tracking
+  authoritative_data:
+    - wines
+    - wine-consumptions
+risk:
+  default: medium
+  reasons:
+    - Consumption history must survive schema and application evolution
+    - Reorder intent must remain explicit rather than inferred
+invariants:
+  - domain/global-invariants.md#wine-history
+  - domain/global-invariants.md#reorder-intent
+architecture_decisions:
+  - architecture/decisions/ADR-001-initial-architecture.md

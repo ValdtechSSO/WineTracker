@@ -1,0 +1,86 @@
+{
+  "$schema": "https://raw.githubusercontent.com/ValdtechSSO/AgenticArchitectureKit/v0.4.3/src/agentic_architecture_kit/data/schemas/architecture-policy.schema.json",
+  "version": 1,
+  "project": "winetracker",
+  "adapter": "dotnet",
+  "adapterConfig": {},
+  "roots": {
+    "modules": "src/Modules",
+    "hosts": "src/Hosts"
+  },
+  "projectSearchRoots": [
+    "src"
+  ],
+  "structureSearchRoots": [
+    "src"
+  ],
+  "moduleContract": {
+    "fileName": "module.contract.yml",
+    "schema": "package:module-contract.schema.json",
+    "forbiddenStructuralFields": [
+      "paths",
+      "entrypoints",
+      "handlers",
+      "classes",
+      "tests",
+      "entities_read",
+      "entities_written",
+      "routes"
+    ]
+  },
+  "technicalModuleNames": [
+    "Git",
+    "Providers",
+    "Repositories",
+    "Validation",
+    "Services",
+    "Infrastructure"
+  ],
+  "forbiddenDirectoryNames": [
+    "Services",
+    "Managers",
+    "Helpers",
+    "Utils",
+    "Common"
+  ],
+  "modules": [
+    {
+      "id": "winejournal",
+      "root": "src/Modules/WineJournal",
+      "namespacePatterns": [
+        "WineTracker.WineJournal",
+        "WineTracker.WineJournal.*"
+      ],
+      "decisionRefs": [
+        "architecture/decisions/ADR-001-initial-architecture.md"
+      ]
+    }
+  ],
+  "hosts": [
+    {
+      "id": "api",
+      "root": "src/Hosts/Api",
+      "allowedSourcePatterns": [
+        "Program.cs"
+      ],
+      "namespacePatterns": [
+        "WineTracker.Api",
+        "WineTracker.Api.*"
+      ],
+      "decisionRefs": [
+        "architecture/decisions/ADR-001-initial-architecture.md"
+      ]
+    },
+    {
+      "id": "web",
+      "root": "src/Hosts/Web",
+      "allowedSourcePatterns": [],
+      "decisionRefs": [
+        "architecture/decisions/ADR-001-initial-architecture.md"
+      ]
+    }
+  ],
+  "projects": [],
+  "allowedProjectDependencies": [],
+  "dependencyRules": []
+}
