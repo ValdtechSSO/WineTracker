@@ -21,66 +21,6 @@
       "reviewWhen": [
         "The authoritative data set, owning module, persistence boundary, rule semantics, or reviewed evidence changes."
       ]
-    },
-    {
-      "id": "REVIEW-002",
-      "rule": "CHG001",
-      "scope": "src/Hosts/Api/WineTracker.Api.csproj",
-      "subjectFingerprint": "ddf182de870f6490e885d00c0860ebb848d51d7a1d455348bad2c832b314af9c",
-      "ruleDigest": "sha256:c4daa8abb019bc2366db3d22b50be18a75144f7f32a985d4c0c7d2713b3d9084",
-      "decision": "The ASP.NET Core API host project is required to expose WineJournal behavior and remains a delivery host without product-rule ownership.",
-      "authorityId": "architecture-maintainers",
-      "reviewedBy": [
-        "@valdtechsecurity"
-      ],
-      "approvalEvidence": "github-maintainer-attestation:https://github.com/ValdtechSSO/WineTracker/pull/3#issuecomment-5299645004",
-      "authorizedBy": [
-        "architecture/decisions/ADR-001-initial-architecture.md"
-      ],
-      "reviewedAtRevision": "d36dfe9a9daa97471df2b0fa930b31daca2534de",
-      "reviewWhen": [
-        "The API project ownership, role, decision evidence, rule semantics, or reviewed subject changes."
-      ]
-    },
-    {
-      "id": "REVIEW-003",
-      "rule": "CHG001",
-      "scope": "src/Modules/WineJournal/WineTracker.WineJournal.csproj",
-      "subjectFingerprint": "77fb2573a315bd5b9a786e1a530d572ad2883ed66385be8321423e0d8e94d15d",
-      "ruleDigest": "sha256:c4daa8abb019bc2366db3d22b50be18a75144f7f32a985d4c0c7d2713b3d9084",
-      "decision": "The WineJournal application project is the minimum concrete project required for the single functional module declared by ADR-001.",
-      "authorityId": "architecture-maintainers",
-      "reviewedBy": [
-        "@valdtechsecurity"
-      ],
-      "approvalEvidence": "github-maintainer-attestation:https://github.com/ValdtechSSO/WineTracker/pull/3#issuecomment-5299645004",
-      "authorizedBy": [
-        "architecture/decisions/ADR-001-initial-architecture.md"
-      ],
-      "reviewedAtRevision": "d36dfe9a9daa97471df2b0fa930b31daca2534de",
-      "reviewWhen": [
-        "The module project ownership, role, decision evidence, rule semantics, or reviewed subject changes."
-      ]
-    },
-    {
-      "id": "REVIEW-004",
-      "rule": "CHG001",
-      "scope": "src/Hosts/Api/WineTracker.Api.csproj",
-      "subjectFingerprint": "aa4fe911f3cb5e2142a5b19c925f0c30186112a1d54a36345d38cd7af8c7bb9f",
-      "ruleDigest": "sha256:c4daa8abb019bc2366db3d22b50be18a75144f7f32a985d4c0c7d2713b3d9084",
-      "decision": "The API-to-WineJournal dependency is the only project dependency needed to compose the functional module into its HTTP delivery host.",
-      "authorityId": "architecture-maintainers",
-      "reviewedBy": [
-        "@valdtechsecurity"
-      ],
-      "approvalEvidence": "github-maintainer-attestation:https://github.com/ValdtechSSO/WineTracker/pull/3#issuecomment-5299645004",
-      "authorizedBy": [
-        "architecture/decisions/ADR-001-initial-architecture.md"
-      ],
-      "reviewedAtRevision": "d36dfe9a9daa97471df2b0fa930b31daca2534de",
-      "reviewWhen": [
-        "The dependency direction, endpoints, decision evidence, rule semantics, or reviewed subject changes."
-      ]
     }
   ]
 }
