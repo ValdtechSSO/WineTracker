@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: winetracker
+      POSTGRES_USER: winetracker
+      POSTGRES_PASSWORD: winetracker
+    ports:
+      - "5432:5432"
+    volumes:
+      - wine-tracker-postgres:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U winetracker -d winetracker"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  wine-tracker-postgres:

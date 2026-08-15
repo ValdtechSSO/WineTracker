@@ -80,7 +80,40 @@
       ]
     }
   ],
-  "projects": [],
-  "allowedProjectDependencies": [],
+  "projects": [
+    {
+      "path": "src/Modules/WineJournal/WineTracker.WineJournal.csproj",
+      "name": "WineTracker.WineJournal",
+      "owner": {
+        "kind": "module",
+        "id": "winejournal"
+      },
+      "role": "application",
+      "decisionRefs": [
+        "architecture/decisions/ADR-001-initial-architecture.md"
+      ]
+    },
+    {
+      "path": "src/Hosts/Api/WineTracker.Api.csproj",
+      "name": "WineTracker.Api",
+      "owner": {
+        "kind": "host",
+        "id": "api"
+      },
+      "role": "host",
+      "decisionRefs": [
+        "architecture/decisions/ADR-001-initial-architecture.md"
+      ]
+    }
+  ],
+  "allowedProjectDependencies": [
+    {
+      "from": "src/Hosts/Api/WineTracker.Api.csproj",
+      "to": "src/Modules/WineJournal/WineTracker.WineJournal.csproj",
+      "decisionRefs": [
+        "architecture/decisions/ADR-001-initial-architecture.md"
+      ]
+    }
+  ],
   "dependencyRules": []
 }
